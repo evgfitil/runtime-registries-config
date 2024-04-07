@@ -128,16 +128,16 @@ func (nc *NodeConfig) reloadOrRestartRuntimeService() error {
 	defer close(resultChannel)
 
 	if _, err = conn.ReloadOrRestartUnitContext(context.TODO(), serviceName, "replace", resultChannel); err != nil {
-		logger.Sugar.Errorf("failed to restart %s service: %s", serviceName, err)
+		logger.Sugar.Errorf("failed to reload or restart %s service: %s", serviceName, err)
 		return err
 	}
 
 	select {
 	case result := <-resultChannel:
-		logger.Sugar.Infof("service %s restart result: %s", serviceName, result)
+		logger.Sugar.Infof("service %s reload or restart result: %s", serviceName, result)
 	case <-time.After(defaultServiceRestartTimeout * time.Second):
-		logger.Sugar.Errorf("timeout waiting for %s to restart", serviceName)
-		return fmt.Errorf("timeout waiting for service %s to restart", serviceName)
+		logger.Sugar.Errorf("timeout waiting for %s to reload or restart", serviceName)
+		return fmt.Errorf("timeout waiting for service %s to reload or restart", serviceName)
 	}
 	return nil
 }
