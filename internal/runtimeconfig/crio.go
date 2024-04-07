@@ -21,7 +21,7 @@ const (
 type CrioConfig struct {
 	RegistryMirrors       []RegistryMirror `toml:"registry"`
 	RuntimeConfigFileName string           `env:"NODE_CONFIG_NAME" envDefault:"99-registries.conf"`
-	RuntimeConfigFilePath string           `env:"NODE_CONFIG_PATH" envDefault:"/etc/crio/crio.conf.d"`
+	RuntimeConfigFilePath string           `env:"NODE_CONFIG_PATH" envDefault:"/etc/containers/registries.conf.d"`
 }
 
 func NewCrioConfig() *CrioConfig {

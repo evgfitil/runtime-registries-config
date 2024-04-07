@@ -18,7 +18,7 @@ type NodeConfig struct {
 const (
 	defaultDirectoryPermissions  = 0755
 	defaultFilePermissions       = 0644
-	defaultFilePrefix            = `# This configuration is managed by runtime-registry-config`
+	defaultFilePrefix            = `# This configuration is managed by runtime-registries-config`
 	defaultServiceRestartTimeout = 2
 )
 
@@ -69,7 +69,7 @@ func (nc *NodeConfig) TruncateRuntimeConfigFile() error {
 		logger.Sugar.Errorf("error writing prefix data: %v", err)
 		return err
 	}
-	if err = nc.restartRuntimeService(); err != nil {
+	if err = nc.reloadOrRestartRuntimeService(); err != nil {
 		logger.Sugar.Errorf("error restarting runtime: %v", err)
 	}
 	nc.Config.ResetConfig()
@@ -91,7 +91,7 @@ func (nc *NodeConfig) UpdateNodeRuntimeConfig(incomingConfig runtimeconfig.Runti
 		logger.Sugar.Errorf("error writing config: %v", err)
 		return err
 	}
-	if err = nc.restartRuntimeService(); err != nil {
+	if err = nc.reloadOrRestartRuntimeService(); err != nil {
 		logger.Sugar.Errorf("error apply new config: %v", err)
 	}
 	return nil
@@ -115,7 +115,7 @@ func createRuntimeConfigDirectory(configFilePath string) error {
 	return nil
 }
 
-func (nc *NodeConfig) restartRuntimeService() error {
+func (nc *NodeConfig) reloadOrRestartRuntimeService() error {
 	conn, err := dbus.NewSystemdConnectionContext(context.TODO())
 	if err != nil {
 		logger.Sugar.Errorf("failed to connect to systemd: %v", err)
@@ -127,7 +127,7 @@ func (nc *NodeConfig) restartRuntimeService() error {
 	resultChannel := make(chan string)
 	defer close(resultChannel)
 
-	if _, err = conn.RestartUnitContext(context.TODO(), serviceName, "replace", resultChannel); err != nil {
+	if _, err = conn.ReloadOrRestartUnitContext(context.TODO(), serviceName, "replace", resultChannel); err != nil {
 		logger.Sugar.Errorf("failed to restart %s service: %s", serviceName, err)
 		return err
 	}
