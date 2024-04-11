@@ -1,5 +1,5 @@
 image:
-  repository: docker.io/evgfitil/runtime-registry-config
+  repository: ghcr.io/evgfitil/runtime-registry-config
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: ""
@@ -8,8 +8,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-env:
-  NODE_CONFIG_NAME: "someconfig.yaml"
+env: {}
+#  KEY: "value"
 
 serviceAccount:
   create: true
