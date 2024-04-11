@@ -1,0 +1,40 @@
+image:
+  repository: docker.io/evgfitil/runtime-registry-config
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env:
+  NODE_CONFIG_NAME: "someconfig.yaml"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: {}
+  # - effect: NoSchedule
+  #   key: node-role.kubernetes.io/control-plane
+
+
+registries: []
+#   - original: "docker.io"
+#     mirror: "some-private-registry.com"
+#     insecure: true
+
+# Specify container log level: DEBUG, INFO, WARNING, CRITICAL, ERROR
+logLevel: "INFO" 

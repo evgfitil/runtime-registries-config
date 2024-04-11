@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "runtime-registry-config.fullname" . }}
+  labels:
+    {{- include "runtime-registry-config.labels" . | nindent 4 }}
+  namespace: {{ .Release.Namespace }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "runtime-registry-config.serviceAccountName" . }}
+roleRef:
+  kind: Role
+  name: {{ include "runtime-registry-config.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
