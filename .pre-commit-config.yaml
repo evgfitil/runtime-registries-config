@@ -18,3 +18,9 @@ repos:
     hooks:
       - id: helm-docs
         files: (README\.md\.gotmpl|(Chart|requirements|values)\.yaml)$
+
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: v0.1.0
+    hooks:
+      - id: dockerfilelint
+        stages: [ commit ]
