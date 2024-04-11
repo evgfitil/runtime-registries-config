@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runtime-registry-config
+  namespace: {{ .Release.Namespace }}
+data:
+  registries: |
+    {{- toYaml .Values.registries | nindent 4 }}
