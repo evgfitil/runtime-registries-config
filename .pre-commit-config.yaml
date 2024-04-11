@@ -12,3 +12,9 @@ repos:
       - id: go-lint
       - id: go-unit-tests
       - id: go-static-check
+
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.13.1
+    hooks:
+      - id: helm-docs
+        files: (README\.md\.gotmpl|(Chart|requirements|values)\.yaml)$
