@@ -20,7 +20,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            runtime-registry-config
+            docker.io/evgfitil/runtime-registry-config
             ghcr.io/evgfitil/runtime-registry-config
           tags: |
             type=semver,pattern={{version}}
